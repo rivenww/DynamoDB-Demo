@@ -26,4 +26,14 @@ public class HeroController {
     public List<Hero> getHeroList() {
         return heroRepository.findAll();
     }
+
+    @PutMapping("/hero")
+    public Hero updateHero(@RequestBody Hero hero) {
+        return heroRepository.update(hero.getId(), hero);
+    }
+
+    @DeleteMapping("/hero/{id}")
+    public void deleteHero(@PathVariable int id) {
+        heroRepository.delete(id);
+    }
 }
