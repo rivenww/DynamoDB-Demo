@@ -2,11 +2,14 @@ package org.rivenstudio.dynamodemo.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import org.rivenstudio.dynamodemo.entity.Hero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Hero repository, CRUD operation of table Hero
@@ -39,5 +42,14 @@ public class HeroRepository {
                                 new ExpectedAttributeValue(
                                         new AttributeValue().withN(String.valueOf(heroId))
                                 )));
+    }
+
+    /**
+     * list table Hero
+     *
+     * @return Hero list
+     */
+    public List<Hero> findAll() {
+        return dynamoDBMapper.scan(Hero.class, new DynamoDBScanExpression());
     }
 }
