@@ -35,13 +35,14 @@ public class HeroRepository {
         dynamoDBMapper.delete(hero);
     }
 
-    public void update(int heroId, Hero hero) {
+    public Hero update(int heroId, Hero hero) {
         dynamoDBMapper.save(hero,
                 new DynamoDBSaveExpression()
                         .withExpectedEntry("id",
                                 new ExpectedAttributeValue(
                                         new AttributeValue().withN(String.valueOf(heroId))
                                 )));
+        return hero;
     }
 
     /**
