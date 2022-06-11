@@ -36,4 +36,9 @@ public class HeroController {
     public void deleteHero(@PathVariable int id) {
         heroRepository.delete(id);
     }
+
+    @GetMapping("/hero/")
+    public List<Hero> searchHeroes(@RequestParam("name") String term) {
+        return heroRepository.findHeroByName(term);
+    }
 }
