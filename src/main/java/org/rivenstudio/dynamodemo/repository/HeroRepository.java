@@ -9,9 +9,11 @@ import org.rivenstudio.dynamodemo.entity.Hero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Hero repository, CRUD operation of table Hero
@@ -53,7 +55,11 @@ public class HeroRepository {
      * @return Hero list
      */
     public List<Hero> findAll() {
-        return dynamoDBMapper.scan(Hero.class, new DynamoDBScanExpression());
+        // TODO Find out a way to scan in order, or query all.
+        return dynamoDBMapper.scan(Hero.class, new DynamoDBScanExpression())
+                .stream()
+                .sorted(Comparator.comparing(Hero::getId))
+                .collect(Collectors.toList());
     }
 
     /**
